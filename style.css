@@ -3,12 +3,11 @@
   flex-direction: column;
   border: 1px solid black;
   border-radius: 5px;
-  width: fit-content;
+  max-width: 1200px;
   padding:10px;
   text-align: center;
   gap:10px;
   align-items: stretch;
-
 }
 
 html{
@@ -20,6 +19,7 @@ html{
   display: flex;
   flex-direction: row;
   gap:10px;
+  justify-content: center;
 }
 
 .todo-list,
@@ -30,17 +30,28 @@ html{
   flex-direction: column;
   list-style-type: none;
   gap:10px;
+  min-width: 400px;
 }
 
 .todo-list li,
 .completed-todo-list li{
   display: flex;
   justify-content: space-between;
+  background-color: rgb(228,225,211);
 }
+
 .todo-list li span,
 .completed-todo-list li span{
   flex-grow: 1;
   text-align: center;
 }
 
+.todo-lists-container {
+  display: flex;
+  gap: 10px;
+}
 
+.todo-list-card {
+  background-color: rgb(240,240,240);
+  min-height: 300px;
+}

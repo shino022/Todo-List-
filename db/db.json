@@ -9,6 +9,16 @@
       "content": "a completed todo",
       "id": 2,
       "completed": true
+    },
+    {
+      "content": "pending todo",
+      "id": 3,
+      "completed": false
+    },
+    {
+      "content": "another completed todo",
+      "id": 4,
+      "completed": true
     }
   ]
 }
