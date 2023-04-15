@@ -1,13 +1,12 @@
 .app{
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
-  border-radius: 5px;
   max-width: 1200px;
   padding:10px;
   text-align: center;
   gap:10px;
   align-items: stretch;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 html{
@@ -30,7 +29,7 @@ html{
   flex-direction: column;
   list-style-type: none;
   gap:10px;
-  min-width: 400px;
+  min-width: 500px;
 }
 
 .todo-list li,
@@ -38,6 +37,8 @@ html{
   display: flex;
   justify-content: space-between;
   background-color: rgb(228,225,211);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .todo-list li span,
@@ -52,6 +53,37 @@ html{
 }
 
 .todo-list-card {
+  border-radius: 5px;
+  padding: 5px;
   background-color: rgb(240,240,240);
   min-height: 300px;
+}
+
+h2 {
+  padding: 0;
+  margin: 5px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.to-left,
+.to-right {
+  background-color: rgb(111, 144, 62);
+}
+
+.edit-btn,
+.submit-btn {
+  background-color: rgb(46, 116, 214);
+}
+
+.delete-btn {
+  background-color: rgb(237, 57, 57);
+}
+
+button {
+  margin: 0 3px;
+  border-radius: 3px;
+  padding:3px 8px;
+  color:white;
+  border-width: 0;
 }

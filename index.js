@@ -177,17 +177,16 @@ const Controller = ((view, model) => {
     const handleComplete = () => {
         view.todolistEl.addEventListener("click", (event) => {
           
-                const id = event.target.parentElement.id.split("-")[1];
-                const targetTodo = state.todos.find((todo) => todo.id == id);
-                const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
-                console.log(targetTodo);
-                model.updateTodo(id, updatedTodo).then((data) => {
-                    console.log(data);
-                    state.todos = state.todos.filter((todo) => todo.id !== +id);
-                
-                });
+            const id = event.target.parentElement.id.split("-")[1];
+            const targetTodo = state.todos.find((todo) => todo.id == id);
+            const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
+            console.log(targetTodo);
+            model.updateTodo(id, updatedTodo).then((data) => {
+                console.log(data);
+                state.todos = state.todos.filter((todo) => todo.id !== +id);
             
-            // } else if(event.target.className === "to-left")
+            });
+        
         });
         view.completedTodolistEl.addEventListener("click", (event) => {
           
