@@ -2,19 +2,13 @@
   "todos": [
     {
       "content": "sdsd",
-      "id": 1
+      "id": 1,
+      "completed": false
     },
     {
-      "content": "aa",
-      "id": 2
-    },
-    {
-      "content": "qq",
-      "id": 3
-    },
-    {
-      "content": "aaa",
-      "id": 4
+      "content": "a completed todo",
+      "id": 2,
+      "completed": true
     }
   ]
 }

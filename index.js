@@ -109,19 +109,22 @@ const Model = (() => {
 */
 const View = (() => {
     const todolistEl = document.querySelector(".todo-list");
+    const completedTodolistEl = document.querySelector(".completed-todo-list");
     const submitBtnEl = document.querySelector(".submit-btn");
     const inputEl = document.querySelector(".input");
 
     const renderTodos = (todos) => {
         let todosTemplate = "";
+        let completedTodosTemplate = "";
         todos.forEach((todo) => {
             const liTemplate = `<li><span>${todo.content}</span><button class="delete-btn" id="${todo.id}">delete</button></li>`;
-            todosTemplate += liTemplate;
+            todo.completed ? completedTodosTemplate += liTemplate : todosTemplate += liTemplate;
         });
         if (todos.length === 0) {
             todosTemplate = "<h4>no task to display!</h4>";
         }
         todolistEl.innerHTML = todosTemplate;
+        completedTodolistEl.innerHTML = completedTodosTemplate;
     };
 
     const clearInput = () => {
@@ -148,7 +151,7 @@ const Controller = ((view, model) => {
                       3. update view
                   */
             const inputValue = view.inputEl.value;
-            model.createTodo({ content: inputValue }).then((data) => {
+            model.createTodo({ content: inputValue, completed: false }).then((data) => {
                 state.todos = [data, ...state.todos];
                 view.clearInput();
             });

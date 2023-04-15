@@ -22,7 +22,8 @@ html{
   gap:10px;
 }
 
-.todo-list{
+.todo-list,
+.completed-todo-list{
   padding:0;
   margin: 0;
   display: flex;
@@ -31,11 +32,13 @@ html{
   gap:10px;
 }
 
-.todo-list li{
+.todo-list li,
+.completed-todo-list li{
   display: flex;
   justify-content: space-between;
 }
-.todo-list li span{
+.todo-list li span,
+.completed-todo-list li span{
   flex-grow: 1;
   text-align: center;
 }
