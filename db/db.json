@@ -13,12 +13,12 @@
     {
       "content": "pending todo",
       "id": 3,
-      "completed": false
+      "completed": true
     },
     {
       "content": "another completed todo",
       "id": 4,
-      "completed": true
+      "completed": false
     }
   ]
 }

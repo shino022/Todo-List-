@@ -50,10 +50,18 @@ const APIs = (() => {
         }).then((res) => JSON.parse(res));
     };
 
+    const updateTodo = (id, newTodo) => {
+        return myFetch("http://localhost:3000/todos/" + id, {
+            method: "PUT",
+            body: JSON.stringify(newTodo),
+            headers: { "Content-Type": "application/json" },
+        }).then((res) => JSON.parse(res));
+    }
+
     const getTodos = () => {
         return myFetch("http://localhost:3000/todos").then((res) => JSON.parse(res));
     };
-    return { createTodo, deleteTodo, getTodos };
+    return { createTodo, deleteTodo, getTodos, updateTodo };
 })();
 
 //IIFE
@@ -86,12 +94,13 @@ const Model = (() => {
             this.#onChange = callback;
         }
     }
-    const { getTodos, createTodo, deleteTodo } = APIs;
+    const { getTodos, createTodo, deleteTodo, updateTodo } = APIs;
     return {
         State,
         getTodos,
         createTodo,
         deleteTodo,
+        updateTodo
     };
 })();
 /* 
@@ -117,7 +126,15 @@ const View = (() => {
         let todosTemplate = "";
         let completedTodosTemplate = "";
         todos.forEach((todo) => {
-            const liTemplate = `<li><span>${todo.content}</span><button class="delete-btn" id="${todo.id}">delete</button></li>`;
+            const liTemplate = `
+                <li id="todo-${todo.id}">
+                    ${todo.completed ? "<button class='to-left'><-</button>" : ""}
+                    <span>${todo.content}</span>
+                    <button class="edit-btn">edit</button>
+                    <button class="delete-btn" id="${todo.id}">delete</button>
+                    ${!todo.completed ? "<button class='to-right'>-></button>" : ""}
+                </li>
+                `;
             todo.completed ? completedTodosTemplate += liTemplate : todosTemplate += liTemplate;
         });
         if (todos.length === 0) {
@@ -131,7 +148,7 @@ const View = (() => {
         inputEl.value = "";
     };
 
-    return { renderTodos, submitBtnEl, inputEl, clearInput, todolistEl };
+    return { renderTodos, submitBtnEl, inputEl, clearInput, todolistEl, completedTodolistEl };
 })();
 
 const Controller = ((view, model) => {
@@ -157,7 +174,37 @@ const Controller = ((view, model) => {
             });
         });
     };
-
+    const handleComplete = () => {
+        view.todolistEl.addEventListener("click", (event) => {
+          
+                const id = event.target.parentElement.id.split("-")[1];
+                const targetTodo = state.todos.find((todo) => todo.id == id);
+                const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
+                console.log(targetTodo);
+                model.updateTodo(id, updatedTodo).then((data) => {
+                    console.log(data);
+                    state.todos = state.todos.filter((todo) => todo.id !== +id);
+                
+                });
+            
+            // } else if(event.target.className === "to-left")
+        });
+        view.completedTodolistEl.addEventListener("click", (event) => {
+          
+            const id = event.target.parentElement.id.split("-")[1];
+            const targetTodo = state.todos.find((todo) => todo.id == id);
+            const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
+            console.log(targetTodo);
+            model.updateTodo(id, updatedTodo).then((data) => {
+                console.log(data);
+                state.todos = state.todos.filter((todo) => todo.id !== +id);
+            
+            });
+        
+        // } else if(event.target.className === "to-left")
+    });
+        
+    }
     const handleDelete = () => {
         //event bubbling
         /* 
@@ -180,6 +227,7 @@ const Controller = ((view, model) => {
         init();
         handleSubmit();
         handleDelete();
+        handleComplete();
         state.subscribe(() => {
             view.renderTodos(state.todos);
         });
