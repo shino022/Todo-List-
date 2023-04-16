@@ -88,3 +88,21 @@ button {
   border-width: 0;
   cursor: pointer;
 }
+
+.todo-list .edit-input {
+  position: absolute;
+  width: 330px;
+}
+.completed-todo-list .edit-input {
+  position: absolute;
+  left: 53px;
+  width: 330px;
+}
+
+.todo-list-card {
+  position: relative;
+}
+
+.hidden {
+  display: none;
+}

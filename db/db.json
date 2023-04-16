@@ -6,7 +6,7 @@
       "completed": false
     },
     {
-      "content": "a completed todo",
+      "content": "bbbb",
       "id": 2,
       "completed": false
     },
@@ -18,7 +18,7 @@
     {
       "content": "another completed todo",
       "id": 4,
-      "completed": false
+      "completed": true
     },
     {
       "content": "qwewq",

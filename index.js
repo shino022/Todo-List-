@@ -128,6 +128,7 @@ const View = (() => {
         todos.forEach((todo) => {
             const liTemplate = `
                 <li id="todo-${todo.id}">
+                    <input id="edit-input-${todo.id}" class="hidden edit-input"></input>
                     ${todo.completed ? "<button class='to-left'><-</button>" : ""}
                     <span>${todo.content}</span>
                     <button class="edit-btn">edit</button>
@@ -176,34 +177,54 @@ const Controller = ((view, model) => {
     };
     const handleComplete = () => {
         view.todolistEl.addEventListener("click", (event) => {
-          
-            const id = event.target.parentElement.id.split("-")[1];
-            const targetTodo = state.todos.find((todo) => todo.id == id);
-            const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
-            console.log(targetTodo);
-            model.updateTodo(id, updatedTodo).then((data) => {
-                console.log(data);
-                state.todos = state.todos.filter((todo) => todo.id !== +id);
-            
-            });
-        
+            if(event.target.classList.contains("to-right")){
+                const id = event.target.parentElement.id.split("-")[1];
+                const targetTodo = state.todos.find((todo) => todo.id == id);
+                const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
+                console.log(targetTodo);
+                model.updateTodo(id, updatedTodo).then((data) => {
+                    console.log(data);
+                    state.todos = state.todos.filter((todo) => todo.id !== +id);
+                
+                });
+            }
         });
         view.completedTodolistEl.addEventListener("click", (event) => {
-          
-            const id = event.target.parentElement.id.split("-")[1];
-            const targetTodo = state.todos.find((todo) => todo.id == id);
-            const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
-            console.log(targetTodo);
-            model.updateTodo(id, updatedTodo).then((data) => {
+            if(event.target.classList.contains("to-left")){
+                const id = event.target.parentElement.id.split("-")[1];
+                const targetTodo = state.todos.find((todo) => todo.id == id);
+                const updatedTodo = { ...targetTodo, completed: !targetTodo.completed }
+                console.log(targetTodo);
+                model.updateTodo(id, updatedTodo).then((data) => {
                 console.log(data);
                 state.todos = state.todos.filter((todo) => todo.id !== +id);
-            
             });
-        
-        // } else if(event.target.className === "to-left")
+            }
+            
     });
-        
     }
+    const handleEdit = () => {
+        view.todolistEl.addEventListener("click", (event) => {
+            if(event.target.className === "edit-btn"){
+                const id = event.target.parentElement.id.split("-")[1];
+                const targetTodo = state.todos.find((todo) => todo.id == id);
+                const inputElem = document.getElementById(`edit-input-${id}`);
+                const isHidden = inputElem.classList.contains("hidden");
+                if (isHidden) {
+                    inputElem.classList.remove("hidden");
+                }
+                else {
+                    const updatedTodo = { ...targetTodo, content: inputElem.value };
+                    model.updateTodo(id, updatedTodo).then((data) => {
+                        console.log(data);
+                        state.todos = state.todos.filter((todo) => todo.id !== +id);            
+                    });
+                }
+                
+             
+            }
+        });
+    };
     const handleDelete = () => {
         //event bubbling
         /* 
@@ -227,6 +248,7 @@ const Controller = ((view, model) => {
         handleSubmit();
         handleDelete();
         handleComplete();
+        handleEdit();
         state.subscribe(() => {
             view.renderTodos(state.todos);
         });
